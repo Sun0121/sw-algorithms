@@ -1,3 +1,6 @@
 
 *.xml
 *.imi
+java/lib
+java/out
+*.iml
