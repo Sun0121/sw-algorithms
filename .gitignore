@@ -4,3 +4,4 @@
 java/lib
 java/out
 *.iml
+kotlin/out
