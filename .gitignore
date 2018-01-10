@@ -5,3 +5,5 @@ java/lib
 java/out
 *.iml
 kotlin/out
+c++/cmake-build-debug
+c++/.idea
