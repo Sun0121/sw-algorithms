@@ -71,12 +71,12 @@ def quick_sort(array, lo, hi):
     #参数合法性
     if array is None or lo >= hi:
         return
-    mid = partition(array, lo, hi)
+    mid = partition_two(array, lo, hi)
     quick_sort(array, lo, mid - 1)
     quick_sort(array, mid + 1, hi)
 
 
-def partition(array, lo, hi):
+def partition_one(array, lo, hi):
     # 以第一个数为基准, 从小到大
     temp_value = array[lo]
     i = lo
@@ -94,6 +94,17 @@ def partition(array, lo, hi):
     return i
 
 
+def partition_two(array, lo, hi):
+    i = lo
+    j = hi
+    while i < j:
+        while i < j and array[i] <= array[hi]:
+            i += 1
+        while i < j and array[j] >= array[hi]: # =保证支点不变，可以后续比较。
+            j -= 1
+        array[i], array[j] = array[j], array[i]
+    array[i], array[hi] = array[hi], array[i]
+    return i
 
 
 #构建最大堆，从小到大排序
@@ -152,8 +163,13 @@ def small_heap_array(array, root_index, length):
     array[root_index] = temp_root_value
 
 
+
 if __name__ == '__main__':
-    a = [1, 3, 2, 4, 8, 5, 6, 7]
-    kth_Largest_element_in_an_array_one(a, 3)
-    b = [1, 3, 2, 4, 8, 5, 6, 7]
-    kth_Largest_element_in_an_array_two(b, 3)
+    a = [1, 4, 4, 3, 1, 7, 8, 7]
+    quick_sort(a, 0, len(a) - 1)
+    print(a)
+    # kth_Largest_element_in_an_array_one(a, 3)
+    # b = [1, 3, 2, 4, 8, 5, 6, 7]
+    # kth_Largest_element_in_an_array_two(b, 3)
+
+
