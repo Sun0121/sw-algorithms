@@ -22,19 +22,48 @@
 3. 复习快速排序和堆排序。
 """
 
-import time
 
 def kth_Largest_element_in_an_array_one(array, k):
-    pass
+    if array is None or len(array) == 0 or k > len(array):
+        return -1
+    result = part_quick_sort(array, 0, len(array) - 1, k)
+    print(result)
 
 
 def part_quick_sort(array, lo, hi, k):
-    pass
-    # part_quick_sort(array, i + 1, hi, k)
+    temp_value = array[lo]
+    start_index = lo
+    stop_index = hi
+    while start_index < stop_index:
+        while start_index < stop_index and array[stop_index] <= temp_value:
+            stop_index -= 1
+        if start_index < stop_index:
+            array[start_index] = array[stop_index]
+        while start_index < stop_index and array[start_index] >= temp_value:
+            start_index += 1
+        if start_index < stop_index:
+            array[stop_index] = array[start_index]
+    array[start_index] = temp_value
+    # start_index: 分界值。如果是是k - 1， 说明这个数就是第k大。
+    if start_index == k - 1:
+        return array[start_index]
+    if start_index > k - 1:
+        return part_quick_sort(array, lo, start_index - 1, k)
+    else:
+        return part_quick_sort(array, start_index + 1, hi, k)
 
 
 def kth_Largest_element_in_an_array_two(array, k):
-    pass
+    #
+    heap_array = array[0: k] #k大小的数组，进行堆化
+    last_root_index = (len(heap_array) >> 1) - 1
+    for root_index in range(last_root_index, -1, -1):
+        small_heap_array(array, root_index, len(array))
+    for value in array[k:]:
+        if value > heap_array[0]:
+            heap_array[0] = value
+            small_heap_array(heap_array, 0, len(heap_array))
+    print(heap_array[0])
 
 
 # 快速排序
@@ -43,8 +72,8 @@ def quick_sort(array, lo, hi):
     if array is None or lo >= hi:
         return
     mid = partition(array, lo, hi)
-    quick_sort(a, lo, mid - 1)
-    quick_sort(a, mid + 1, hi)
+    quick_sort(array, lo, mid - 1)
+    quick_sort(array, mid + 1, hi)
 
 
 def partition(array, lo, hi):
@@ -124,6 +153,7 @@ def small_heap_array(array, root_index, length):
 
 
 if __name__ == '__main__':
-    pass
-    # quick_sort(a, 0, len(a) - 1)
-    # assert kth_Largest_element_in_an_array_two(a, 7) == 2
+    a = [1, 3, 2, 4, 8, 5, 6, 7]
+    kth_Largest_element_in_an_array_one(a, 3)
+    b = [1, 3, 2, 4, 8, 5, 6, 7]
+    kth_Largest_element_in_an_array_two(b, 3)
